@@ -1,24 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Titulo from './Components/Titulo';
+import Subtitulo from './Components/Subtitulo';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Formulario from './Components/Formulario';
 
+// react funcional component
+// como este llama a titulo y subtitulo se dice que es el componente PADRE 
+// y por lo tanto le puede en viar info pero el hijo al padre no
+// esta info se llama PROPS y el hijo lo puede leer y mostrar pero no modificar
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Titulo></Titulo>
+      <Subtitulo comision="1A"></Subtitulo>
+      <Formulario></Formulario>
     </div>
   );
 }
