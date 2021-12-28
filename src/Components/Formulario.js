@@ -11,14 +11,14 @@ const Formulario = () => {
   const [inicio, setInicio] = useState(true);
 
   useEffect(() => {
-    if (inicio){
+    if (inicio) {
       let tareasLS = JSON.parse(localStorage.getItem("tareas"));
-      if(tareasLS){
+      if (tareasLS) {
         setTareas(tareasLS);
-        setInicio(false)
+        setInicio(false);
       }
     }
-      localStorage.setItem("tareas", JSON.stringify(tareas));
+    localStorage.setItem("tareas", JSON.stringify(tareas));
     //  if (tareasLS){
     //    console.log("quiero actualizar LS")
     //    localStorage.setItem("tareas", JSON.stringify(tareas))
@@ -26,51 +26,55 @@ const Formulario = () => {
     //   console.log("no existe")
     //   localStorage.setItem("tareas", JSON.stringify([]))
     //  }
-  }, [tarea, tareas])
+  }, [tarea, tareas]);
   // defino las funciones
-//   const capturarTarea = (e) => {
-//     console.log(e.target.value);
-//     setTarea(e.target.value);
-//   };
-const handleSubmit = (e) =>{
+  //   const capturarTarea = (e) => {
+  //     console.log(e.target.value);
+  //     setTarea(e.target.value);
+  //   };
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("en el evento submit")
+    console.log("en el evento submit");
     // react no permite  modificar el state si no es a trave de la funcion que llamamos setTareas entonces:
-    let arreglo =  tareas;
-    arreglo.push(tarea);
+    let arreglo = tareas;
+    if (tarea !== "") {
+      arreglo.push(tarea);
+      setTareas(arreglo);
+      setTarea("");
+    }else{
+      alert("Please type something")
+    }
+  };
+  const borrarTarea = (nombre) => {
+    console.log("borrar la tarea" + nombre);
+    let arreglo = tareas.filter((nombreTarea) => nombreTarea !== nombre);
     setTareas(arreglo);
-    setTarea("");
-}
-const borrarTarea = (nombre) =>{
-  console.log("borrar la tarea"+ nombre);
-  let arreglo = tareas.filter((nombreTarea) => nombreTarea !== nombre);
-  setTareas(arreglo);
-}
+  };
 
   // Aqui va encerrsdo el maquetado html
-  // Otra recomendacion de react es llamar las funciones de eventos  handleNombre del evento  
+  // Otra recomendacion de react es llamar las funciones de eventos  handleNombre del evento
   return (
     <Fragment>
       <div className="container d-flex justify-content-center">
-      <form className="w-75" onSubmit={handleSubmit}>
-        <div className="d-flex form-group">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Tarea 1"
-            onChange={(e) => e.target.value !== ""? setTarea(e.target.value) : alert("Please type something")}
-            value={tarea}
-          ></input>
-          <button className="btn btn-outline-dark" type="submit">
-            Agregar
-          </button>
-        </div>
-      </form>
-    </div>
-    <section className="container w-75">
-      {/* arregloTareas es el nombre del props, tareas es el estate */}
-      <Lista arregloTareas={tareas} borrarTarea={borrarTarea}></Lista>
-    </section>
+        <form className="w-75" onSubmit={handleSubmit}>
+          <div className="d-flex form-group">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Tarea 1"
+              onChange={(e) => setTarea(e.target.value)}
+              value={tarea}
+            ></input>
+            <button className="btn btn-outline-dark" type="submit">
+              Agregar
+            </button>
+          </div>
+        </form>
+      </div>
+      <section className="container w-75">
+        {/* arregloTareas es el nombre del props, tareas es el estate */}
+        <Lista arregloTareas={tareas} borrarTarea={borrarTarea}></Lista>
+      </section>
     </Fragment>
   );
 };
