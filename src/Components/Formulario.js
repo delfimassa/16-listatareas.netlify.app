@@ -58,7 +58,7 @@ const borrarTarea = (nombre) =>{
             type="text"
             className="form-control"
             placeholder="Tarea 1"
-            onChange={  (e) => setTarea(e.target.value)}
+            onChange={ e.target.value !== ""? (e) => setTarea(e.target.value) : alert("Please type something")}
             value={tarea}
           ></input>
           <button className="btn btn-outline-dark" type="submit">
